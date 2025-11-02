@@ -1,0 +1,21 @@
+
+# 1. GET (вперше) → завантаження з http.cat та кешування
+curl -v http://127.0.0.1:3000/200 > 200.jpg
+
+# 2. GET (з кешу) → вже без звернення до http.cat
+curl -v http://127.0.0.1:3000/200 > 200_cached.jpg
+
+# 3. DELETE → видалення файлу з кешу
+curl -X DELETE -v http://127.0.0.1:3000/200
+
+# 4. GET після DELETE → повторне завантаження з http.cat
+curl -v http://127.0.0.1:3000/200 > 200_after_delete.jpg
+
+# 5. GET неіснуючого ресурсу → 404 Not Found
+curl -v http://127.0.0.1:3000/9999
+
+# 6. PUT → створення або заміна файлу в кеші
+curl -X PUT --data-binary "@my.jpg" -v http://127.0.0.1:3000/201
+
+# 7. POST → заборонений метод
+curl -X POST -v http://127.0.0.1:3000/200
